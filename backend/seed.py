@@ -173,11 +173,11 @@ def main():
     db = SessionLocal()
     try:
         # Limpar dados existentes
-        db.query(models.Livro).delete()
+        db.query(models.LivroModel).delete()
         
         # Inserir os livros
         for livro_data in livros:
-            livro = models.Livro(**livro_data)
+            livro = models.LivroModel(**livro_data)
             if livro_data["status"] == "Emprestado":
                 livro.data_emprestimo = date.today()
             db.add(livro)

@@ -4,7 +4,7 @@ from typing import Optional
 from datetime import date, datetime
 from database import Base
 
-class Livro(Base):
+class LivroModel(Base):
     __tablename__ = "livros"
 
     id = Column(Integer, primary_key=True, index=True)

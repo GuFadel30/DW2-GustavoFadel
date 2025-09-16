@@ -1,0 +1,250 @@
+/* Reset e variáveis */
+:root {
+    --bg-dark: #0A1929;
+    --text-light: #F8FAFC;
+    --primary: #1E88E5;
+    --accent: #64B5F6;
+    --success: #4CAF50;
+    --danger: #F44336;
+    --card-bg: #132F4C;
+    --hover-bg: #173A5E;
+    --header-bg: #1565C0;
+    --sidebar-bg: #102A43;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos base */
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: var(--header-bg);
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 1rem auto;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--text-light);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+/* Container principal */
+.container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+    margin-top: 100px;
+    padding: 1rem;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    position: fixed;
+    width: 230px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.filter-group select,
+.filter-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    border: 1px solid var(--text-light);
+}
+
+/* Main content */
+main {
+    margin-left: 250px;
+    padding: 1rem;
+}
+
+/* Cards de livros */
+.book-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    width: calc(33.33% - 2rem);
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    background-color: var(--hover-bg);
+}
+
+.book-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.book-info {
+    margin-bottom: 1.5rem;
+}
+
+.book-info p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.card-actions button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-emprestar {
+    background-color: var(--success);
+}
+
+.btn-emprestar:hover {
+    background-color: #388E3C;
+}
+
+.btn-editar {
+    background-color: var(--primary);
+}
+
+.btn-editar:hover {
+    background-color: #1976D2;
+}
+
+.btn-excluir {
+    background-color: var(--danger);
+}
+
+.btn-excluir:hover {
+    background-color: #D32F2F;
+}
+
+/* Botões */
+button {
+    background-color: var(--primary);
+    color: var(--text-light);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #2563EB;
+}
+
+button:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Modais */
+dialog {
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 500px;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* Status colors */
+.status-disponivel {
+    color: var(--success);
+}
+
+.status-emprestado {
+    color: var(--accent);
+}
+
+/* Acessibilidade */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    main {
+        margin-left: 0;
+    }
+}

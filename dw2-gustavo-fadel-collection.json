@@ -1,0 +1,142 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "DW2 Biblioteca",
+  "dateExported": "2025-09-16T12:00:00.000Z",
+  "version": "1.1",
+  "folders": [
+    {
+      "name": "Health",
+      "_id": "health",
+      "containerId": "",
+      "created": "2025-09-16T12:00:00.000Z",
+      "sortNum": 10000
+    },
+    {
+      "name": "Livros",
+      "_id": "livros",
+      "containerId": "",
+      "created": "2025-09-16T12:00:00.000Z",
+      "sortNum": 20000
+    }
+  ],
+  "requests": [
+    {
+      "_id": "health-check",
+      "colId": "health-collection",
+      "containerId": "health",
+      "name": "Health Check",
+      "url": "http://localhost:8000/health",
+      "method": "GET",
+      "sortNum": 10000,
+      "created": "2025-09-16T12:00:00.000Z",
+      "modified": "2025-09-16T12:00:00.000Z",
+      "headers": [],
+      "params": [],
+      "tests": [
+        {
+          "type": "res-code",
+          "custom": "",
+          "action": "equal",
+          "value": "200"
+        },
+        {
+          "type": "json-query",
+          "custom": "json.status",
+          "action": "equal",
+          "value": "ok"
+        }
+      ]
+    },
+    {
+      "_id": "list-livros",
+      "colId": "livros-collection",
+      "containerId": "livros",
+      "name": "Listar Livros",
+      "url": "http://localhost:8000/livros",
+      "method": "GET",
+      "sortNum": 20000,
+      "created": "2025-09-16T12:00:00.000Z",
+      "modified": "2025-09-16T12:00:00.000Z",
+      "headers": [],
+      "params": [
+        {
+          "name": "search",
+          "value": "Dom",
+          "isPath": false
+        },
+        {
+          "name": "genero",
+          "value": "Ficção",
+          "isPath": false
+        },
+        {
+          "name": "ano",
+          "value": "2020",
+          "isPath": false
+        },
+        {
+          "name": "status",
+          "value": "disponível",
+          "isPath": false
+        }
+      ],
+      "tests": [
+        {
+          "type": "res-code",
+          "custom": "",
+          "action": "equal",
+          "value": "200"
+        },
+        {
+          "type": "json-query",
+          "custom": "json",
+          "action": "isarray",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "_id": "create-livro",
+      "colId": "livros-collection",
+      "containerId": "livros",
+      "name": "Criar Livro",
+      "url": "http://localhost:8000/livros",
+      "method": "POST",
+      "sortNum": 30000,
+      "created": "2025-09-16T12:00:00.000Z",
+      "modified": "2025-09-16T12:00:00.000Z",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"titulo\": \"Dom Casmurro\",\n  \"autor\": \"Machado de Assis\",\n  \"ano\": 1899,\n  \"genero\": \"Romance\",\n  \"isbn\": \"1234567890\",\n  \"status\": \"disponível\"\n}",
+        "form": []
+      },
+      "tests": [
+        {
+          "type": "res-code",
+          "custom": "",
+          "action": "equal",
+          "value": "200"
+        },
+        {
+          "type": "json-query",
+          "custom": "json.titulo",
+          "action": "equal",
+          "value": "Dom Casmurro"
+        },
+        {
+          "type": "json-query",
+          "custom": "json.autor",
+          "action": "equal",
+          "value": "Machado de Assis"
+        }
+      ]
+    }
+  ]
+}

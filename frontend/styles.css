@@ -1,15 +1,40 @@
 /* Reset e variáveis */
 :root {
-    --bg-dark: #0A1929;
-    --text-light: #F8FAFC;
-    --primary: #1E88E5;
-    --accent: #64B5F6;
-    --success: #4CAF50;
-    --danger: #F44336;
-    --card-bg: #132F4C;
-    --hover-bg: #173A5E;
-    --header-bg: #1565C0;
-    --sidebar-bg: #102A43;
+    /* Tema escuro (padrão) */
+    --bg-dark: #0f172a;
+    --text-light: #f1f5f9;
+    --text-muted: #94a3b8;
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --accent: #60a5fa;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --card-bg: #1e293b;
+    --hover-bg: #334155;
+    --header-bg: #1e40af;
+    --sidebar-bg: #0f172a;
+    --border-color: rgba(148, 163, 184, 0.1);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Tema claro */
+:root[data-theme="light"] {
+    --bg-dark: #f8fafc;
+    --text-light: #0f172a;
+    --text-muted: #64748b;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --accent: #3b82f6;
+    --card-bg: #ffffff;
+    --hover-bg: #f1f5f9;
+    --header-bg: #1e40af;
+    --sidebar-bg: #ffffff;
+    --border-color: rgba(51, 65, 85, 0.1);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 * {
@@ -19,79 +44,154 @@
 }
 
 /* Estilos base */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
     background-color: var(--bg-dark);
     color: var(--text-light);
     min-height: 100vh;
+    letter-spacing: -0.025em;
 }
 
 /* Header */
 header {
     background-color: var(--header-bg);
-    padding: 1rem;
+    padding: 1.5rem;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--text-light), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
 }
 
 .search-bar {
     display: flex;
     gap: 1rem;
     max-width: 800px;
-    margin: 1rem auto;
+    margin: 0 auto;
 }
 
 .search-bar input {
     flex: 1;
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--text-light);
-    background-color: var(--bg-dark);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: rgba(255, 255, 255, 0.05);
     color: var(--text-light);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-bar input::placeholder {
+    color: var(--text-muted);
 }
 
 /* Container principal */
 .container {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 2rem;
-    margin-top: 100px;
-    padding: 1rem;
+    margin-top: 120px;
+    padding: 1.5rem;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Sidebar */
 .sidebar {
     background-color: var(--sidebar-bg);
-    padding: 1.5rem;
-    border-radius: 8px;
+    padding: 1.75rem;
+    border-radius: 16px;
     position: fixed;
-    width: 230px;
-    height: calc(100vh - 120px);
+    width: 260px;
+    height: calc(100vh - 140px);
     overflow-y: auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(8px);
 }
 
 .filter-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .filter-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
 }
 
 .filter-group select,
 .filter-group input {
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 4px;
-    background-color: var(--bg-dark);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
     color: var(--text-light);
-    border: 1px solid var(--text-light);
+    border: 1px solid var(--border-color);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.filter-group select:hover,
+.filter-group input:hover {
+    border-color: var(--primary);
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f1f5f9' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+.filter-group select option {
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+}
+
+/* Estilo para o dropdown aberto */
+.filter-group select::-ms-expand {
+    display: none;
+}
+
+.filter-group select:focus option:checked {
+    background: var(--primary);
+    color: var(--text-light);
 }
 
 /* Main content */
@@ -101,30 +201,55 @@ main {
 }
 
 /* Cards de livros */
+#listaLivros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
 .book-card {
     background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    width: calc(33.33% - 2rem);
-    min-width: 280px;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.book-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .book-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-lg);
     background-color: var(--hover-bg);
 }
 
+.book-card:hover::before {
+    opacity: 1;
+}
+
 .book-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-light);
+    font-weight: 600;
+    line-height: 1.3;
 }
 
 .book-info {
@@ -154,8 +279,16 @@ main {
     background-color: var(--success);
 }
 
+.book-card[data-status="Emprestado"] .btn-emprestar {
+    background-color: var(--danger);
+}
+
 .btn-emprestar:hover {
-    background-color: #388E3C;
+    background-color: #16a34a;
+}
+
+.book-card[data-status="Emprestado"] .btn-emprestar:hover {
+    background-color: #dc2626;
 }
 
 .btn-editar {
@@ -178,34 +311,119 @@ main {
 button {
     background-color: var(--primary);
     color: var(--text-light);
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    letter-spacing: 0.025em;
+    box-shadow: var(--shadow-sm);
 }
 
 button:hover {
-    background-color: #2563EB;
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 button:focus {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Botão de tema */
+.theme-toggle {
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.theme-toggle-dark,
+.theme-toggle-light {
+    font-size: 1.2rem;
+}
+
+/* Mostrar/esconder ícone baseado no tema */
+:root[data-theme="light"] .theme-toggle-dark,
+:root:not([data-theme="light"]) .theme-toggle-light {
+    display: none;
+}
+
+/* Transição suave ao mudar de tema */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Modais */
 dialog {
     background-color: var(--card-bg);
     color: var(--text-light);
-    border: none;
-    border-radius: 8px;
-    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.5rem;
     max-width: 500px;
+    box-shadow: var(--shadow-lg);
+    animation: dialogShow 0.3s ease;
+}
+
+@keyframes dialogShow {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    animation: backdropShow 0.3s ease;
+}
+
+@keyframes backdropShow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+dialog h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-light);
+    font-weight: 600;
+    background: linear-gradient(to right, var(--text-light), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 /* Paginação */

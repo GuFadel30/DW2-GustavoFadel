@@ -28,13 +28,23 @@ const api = {
     },
 
     async createLivro(livro) {
-        const response = await fetch('http://localhost:8000/livros', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(livro)
-        });
-        if (!response.ok) throw new Error('Erro ao criar livro');
-        return response.json();
+        try {
+            const response = await fetch('http://localhost:8000/livros', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(livro)
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'Erro ao criar livro');
+            }
+            
+            return response.json();
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            throw error;
+        }
     },
 
     async updateLivro(id, livro) {
@@ -84,6 +94,7 @@ function renderLivros(livros) {
     livros.forEach(livro => {
         const card = document.createElement('div');
         card.className = 'book-card';
+        card.dataset.status = livro.status;
         card.innerHTML = `
             <div class="book-info">
                 <h3>${livro.titulo}</h3>
@@ -97,8 +108,7 @@ function renderLivros(livros) {
             <div class="card-actions">
                 <button onclick="handleEmprestimo(${livro.id})" 
                         class="btn-emprestar"
-                        aria-label="${livro.status === 'Disponível' ? 'Emprestar' : 'Devolver'} ${livro.titulo}"
-                        ${livro.status === 'Emprestado' ? 'disabled' : ''}>
+                        aria-label="${livro.status === 'Disponível' ? 'Emprestar' : 'Devolver'} ${livro.titulo}">
                     ${livro.status === 'Disponível' ? 'Emprestar' : 'Devolver'}
                 </button>
                 <button onclick="handleEdit(${livro.id})" 
@@ -159,14 +169,25 @@ async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const livro = Object.fromEntries(formData);
+    
+    // Converter o ano para número
+    if (livro.ano) {
+        livro.ano = parseInt(livro.ano);
+    }
+
+    // Adicionar status inicial
+    livro.status = 'Disponível';
 
     try {
-        await api.createLivro(livro);
-        await loadLivros();
-        modalLivro.close();
-        event.target.reset();
+        const response = await api.createLivro(livro);
+        if (response) {
+            await loadLivros();
+            document.getElementById('modalLivro').close();
+            event.target.reset();
+        }
     } catch (error) {
-        alert(error.message);
+        console.error('Erro ao criar livro:', error);
+        alert('Erro ao criar livro: ' + error.message);
     }
 }
 
@@ -256,7 +277,28 @@ function updatePagination() {
 }
 
 // Event Listeners
+// Função para gerenciar o tema
+function initTheme() {
+    const btnTema = document.getElementById('btnTema');
+    const root = document.documentElement;
+    
+    // Verifica se há um tema salvo no localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        root.dataset.theme = savedTheme;
+    }
+
+    // Adiciona o evento de clique para alternar o tema
+    btnTema.addEventListener('click', () => {
+        const currentTheme = root.dataset.theme;
+        const newTheme = currentTheme === 'light' ? '' : 'light';
+        root.dataset.theme = newTheme;
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     // Carregar livros iniciais
     loadLivros();
 
@@ -320,6 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnNovo.addEventListener('click', () => {
         formLivro.reset();
+        document.getElementById('modalTitle').textContent = 'Cadastrar Livro';
+        formLivro.dataset.mode = 'create';
         modalLivro.showModal();
     });
 
